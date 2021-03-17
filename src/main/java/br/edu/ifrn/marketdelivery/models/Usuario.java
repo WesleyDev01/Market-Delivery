@@ -5,21 +5,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "usuario", uniqueConstraints={@UniqueConstraint(columnNames={"cpf", "email", "login"})})
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank
+	@NotNull
 	private int tipo;
 	@NotBlank
-	private int cpf;
+	private String cpf;
 	@NotBlank
 	private String nome;
 	@NotBlank
+	@Email
 	private String email;
 	@NotBlank
 	private String telefone;
@@ -27,7 +31,7 @@ public class Usuario {
 	private String login;
 	@NotBlank
 	private String senha;
-	@NotBlank
+	@NotNull
 	private boolean vip;
 
 	public Long getId() {
@@ -42,11 +46,11 @@ public class Usuario {
 		this.tipo = tipo;
 	}
 
-	public int getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(int cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
@@ -96,6 +100,12 @@ public class Usuario {
 
 	public void setVip(boolean vip) {
 		this.vip = vip;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", tipo=" + tipo + ", cpf=" + cpf + ", nome=" + nome + ", email=" + email
+				+ ", telefone=" + telefone + ", login=" + login + ", senha=" + senha + ", vip=" + vip + "]";
 	}
 
 }
