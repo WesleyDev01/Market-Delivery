@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <title>Market Delivery</title>
 </head>
 <body>
-<h1>Seja bem-vindo(a) ao Market Delivery</h1>
+
+	<div th:replace="~{menu :: menu}"></div>
+
+	<h1>Seja bem-vindo(a) ao Market Delivery</h1>
 </body>
 </html>

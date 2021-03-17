@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<title>Usuarios</title>
+<script>
+	function mascara_cpf() {
+		var cpf = document.getElementById('cpf')
+		if (cpf.value.length == 3 || cpf.value.length == 7) {
+			cpf.value += "."
+		} else if (cpf.value.length == 11) {
+			cpf.value += "-"
+		}
+	}
+
+	function mascara_tel() {
+		var tel = document.getElementById('tel')
+		if (tel.value.length == 1) {
+			tel.value = "(" + tel.value
+		} else if (tel.value.length == 3) {
+			tel.value += ")"
+		} else if (tel.value.length == 9) {
+			tel.value += "-"
+		}
+	}
+</script>
+</head>
+<body>
+
+
+
+	<div th:replace="~{menu :: menu}"></div>
+
+	<div class="container">
+
+		<h1>Cadastrar usuario</h1>
+
+		<form method="POST" action="/usuarios" th:object="${usuario}">
+
+			<div>
+				<input type="hidden" th:field="*{id}" readonly="readonly">
+			</div>
+			<div>
+				<label>Nome: </label> <input type="text" th:field="*{nome}"
+					placeholder="Seu Nome">
+			</div>
+			<div>
+				<label>Tipo: </label> <input type="number" th:field="*{tipo} "
+					min="0" max="2">
+			</div>
+			<div>
+				<label>Cpf: </label> <input type="text" id="cpf" th:field="*{cpf}"
+					placeholder="___.___.-__" maxlength="14" onkeyup="mascara_cpf()"
+					onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+			</div>
+			<div>
+				<label>Email: </label> <input type="email" th:field="*{email}"
+					placeholder="Exemplo@gmail.com">
+			</div>
+			<div>
+				<label>Telefone: </label> <input type="text" id="tel"
+					th:field="*{telefone}" placeholder="(84)99999-9999" maxlength="14"
+					onkeyup="mascara_tel()"
+					onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+			</div>
+			<div>
+				<label>Login: </label> <input type="text" th:field="*{login}"
+					placeholder="LoginDoUsuario">
+			</div>
+			<div>
+				<label>Senha: </label> <input type="password" th:field="*{senha}" placeholder="*********">
+			</div>
+			<div>
+				<input type="checkbox" th:field="*{vip}" readonly="readonly">
+			</div>
+
+			<div>
+				<button class="waves-effect waves-light btn" type="submit">Salvar</button>
+				<button class="waves-effect waves-light btn" type="reset">Limpar</button>
+			</div>
+
+		</form>
+
+	</div>
+
+</body>
+</html>
