@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "usuario", uniqueConstraints={@UniqueConstraint(columnNames={"cpf", "email", "login"})})
+@Table(name = "usuario", uniqueConstraints = { @UniqueConstraint(columnNames = { "cpf", "email", "login" }) })
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
