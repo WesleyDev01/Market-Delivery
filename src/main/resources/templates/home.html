@@ -12,5 +12,33 @@
 	<div th:replace="~{menu :: menu}"></div>
 
 	<h1>Seja bem-vindo(a) ao Market Delivery</h1>
+
+	<div class="container">
+
+		<h1>Comércios disponíveis</h1>
+
+		<table class="highlight">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nome</th>
+					<th>Email</th>
+					<th>Endereço</th>
+					<th>Telefone</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="c : ${comercios}">
+					<td th:text="${c.id}"></td>
+					<td th:text="${c.nome}"></td>
+					<td th:text="${c.email}"></td>
+					<td th:text="${c.endereco}"></td>
+					<td th:text="${c.telefone}"></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
 </body>
 </html>
