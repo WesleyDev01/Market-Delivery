@@ -31,7 +31,8 @@
 			<tbody>
 				<tr th:each="c : ${comercios}">
 					<td th:text="${c.id}"></td>
-					<td th:text="${c.nome}"></td>
+					<td><a th:href="@{/comercios/{id}(id=${c.id})}"><span
+							th:text="${c.nome}"></span></a></td>
 					<td th:text="${c.email}"></td>
 					<td th:text="${c.endereco}"></td>
 					<td th:text="${c.telefone}"></td>
