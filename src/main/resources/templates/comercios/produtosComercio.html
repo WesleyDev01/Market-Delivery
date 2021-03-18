@@ -61,15 +61,50 @@
 						</div>
 
 						<div>
-							<label><input type="checkbox" checked
-								name="disponivel" onclick="return false;"> <span>Disponível</span> </label> 
+							<label><input type="checkbox" checked name="disponivel"
+								onclick="return false;"> <span>Disponível</span> </label>
 						</div>
 						<div>
-						<br></br>
+							<br></br>
 							<button type="submit" class="btn">Adicionar</button>
 							<button type="reset" class="btn">Limpar</button>
 						</div>
 					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="s12">
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title">Produtos</span>
+					<table class="highlight">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Nome</th>
+								<th>Categoria</th>
+								<th>Preço</th>
+								<th>Quantidade</th>
+								<th>Disponível</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="p : ${produtos}">
+								<td th:text="${p.id}"></td>
+								<td th:text="${p.nome}"></td>
+								<td th:text="${p.categoria}"></td>
+								<td th:text="${p.preco}"></td>
+								<td th:text="${p.quantidade}"></td>
+								<div th:switch="${p.disponivel}">
+									<td th:case="true">Sim</td>
+									<td th:case="false">Não</td>
+								</div>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
