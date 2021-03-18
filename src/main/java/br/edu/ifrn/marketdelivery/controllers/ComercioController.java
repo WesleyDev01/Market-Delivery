@@ -86,4 +86,16 @@ public class ComercioController {
 		return md;
 	}
 
+	@GetMapping("/{idComercio}/remover")
+	public String removerComercio(@PathVariable Long idComercio) {
+		Optional<Comercio> opt = cr.findById(idComercio);
+		if (!opt.isEmpty()) {
+			Comercio comercio = opt.get();
+			List<Produto> produtos = pr.findByComercio(comercio);
+			pr.deleteAll(produtos);
+			cr.delete(comercio);
+		}
+		return "redirect:/comercios";
+	}
+
 }

@@ -5,6 +5,8 @@
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <title>Market Delivery</title>
 </head>
 <body>
@@ -36,6 +38,8 @@
 					<td th:text="${c.email}"></td>
 					<td th:text="${c.endereco}"></td>
 					<td th:text="${c.telefone}"></td>
+					<td><a th:href="@{/comercios/{id}/remover(id=${c.id})}"><i
+							class="material-icons">delete</i></a></td>
 				</tr>
 			</tbody>
 		</table>
