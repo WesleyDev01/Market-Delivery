@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<title>Lista de usuários</title>
+</head>
+<body>
+
+	<div th:replace="~{menu :: menu}"></div>
+
+	<div class="container">
+
+		<h1>Usuários</h1>
+
+		<table class="highlight">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Tipo</th>
+					<th>Nome</th>
+					<th>Cpf</th>
+					<th>Email</th>
+					<th>Telefone</th>
+					<th>Login</th>
+					<th>Senha</th>
+					<th>VIP</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="u : ${usuarios}">
+					<td th:text="${u.id}"></td>
+					<td th:text="${u.tipo}"></td>
+					<td th:text="${u.nome}"></td>
+					<td th:text="${u.cpf}"></td>
+					<td th:text="${u.email}"></td>
+					<td th:text="${u.telefone}"></td>
+					<td th:text="${u.login}"></td>
+					<td th:text="${u.senha}"></td>
+					<div th:switch="${u.vip}">
+						<td th:case="true">Sim</td>
+						<td th:case="false">Não</td>
+					</div>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</body>
+</html>
