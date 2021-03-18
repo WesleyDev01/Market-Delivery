@@ -4,8 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "produto")
@@ -14,18 +16,19 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank
+	@NotNull
 	private int quantidade;
-	@NotBlank
-	private int idComercio;
 	@NotBlank
 	private String nome;
 	@NotBlank
 	private String categoria;
-	@NotBlank
+	@NotNull
 	private boolean disponivel;
-	@NotBlank
+	@NotNull
 	private double preco;
+
+	@ManyToOne
+	private Comercio comercio;
 
 	public Long getId() {
 		return id;
@@ -37,14 +40,6 @@ public class Produto {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
-	}
-
-	public int getIdComercio() {
-		return idComercio;
-	}
-
-	public void setIdComercio(int idComercio) {
-		this.idComercio = idComercio;
 	}
 
 	public String getNome() {
@@ -77,6 +72,14 @@ public class Produto {
 
 	public void setPreco(double preco) {
 		this.preco = preco;
+	}
+
+	public Comercio getComercio() {
+		return comercio;
+	}
+
+	public void setComercio(Comercio comercio) {
+		this.comercio = comercio;
 	}
 
 }

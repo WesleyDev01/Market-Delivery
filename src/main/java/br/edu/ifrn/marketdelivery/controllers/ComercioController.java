@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.edu.ifrn.marketdelivery.models.Comercio;
+import br.edu.ifrn.marketdelivery.models.Produto;
 import br.edu.ifrn.marketdelivery.repositories.ComercioRepository;
+import br.edu.ifrn.marketdelivery.repositories.ProdutoRepository;
 
 @Controller
 @RequestMapping("/comercios")
@@ -20,6 +22,8 @@ public class ComercioController {
 
 	@Autowired
 	ComercioRepository cr;
+	@Autowired
+	ProdutoRepository pr;
 
 	@GetMapping("/cadastrarComercio")
 	public String formMarket(Comercio comercio) {
@@ -57,6 +61,26 @@ public class ComercioController {
 
 		return md;
 
+	}
+
+	@PostMapping("/{idComercio}")
+	public ModelAndView adicionarProduto(@PathVariable Long idComercio, Produto produto) {
+		ModelAndView md = new ModelAndView();
+		Optional<Comercio> opt = cr.findById(idComercio);
+
+		if (opt.isEmpty()) {
+			md.setViewName("redirect:/comercios");
+			return md;
+		}
+
+		Comercio comercio = opt.get();
+		produto.setComercio(comercio);
+
+		pr.save(produto);
+
+		md.setViewName("redirect:/comercios/{idComercio}");
+
+		return md;
 	}
 
 }

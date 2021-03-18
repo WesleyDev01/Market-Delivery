@@ -1,13 +1,16 @@
 package br.edu.ifrn.marketdelivery.dtos;
 
+import br.edu.ifrn.marketdelivery.models.Comercio;
+
 public class ProdutoDTO {
 	private Long id;
 	private int quantidade;
-	private int idComercio;
 	private String nome;
 	private String categoria;
 	private boolean disponivel;
 	private double preco;
+
+	private Comercio comercio;
 
 	public Long getId() {
 		return id;
@@ -23,14 +26,6 @@ public class ProdutoDTO {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
-	}
-
-	public int getIdComercio() {
-		return idComercio;
-	}
-
-	public void setIdComercio(int idComercio) {
-		this.idComercio = idComercio;
 	}
 
 	public String getNome() {
@@ -63,6 +58,14 @@ public class ProdutoDTO {
 
 	public void setPreco(double preco) {
 		this.preco = preco;
+	}
+
+	public Comercio getComercio() {
+		return comercio;
+	}
+
+	public void setComercio(Comercio comercio) {
+		this.comercio = comercio;
 	}
 
 }
