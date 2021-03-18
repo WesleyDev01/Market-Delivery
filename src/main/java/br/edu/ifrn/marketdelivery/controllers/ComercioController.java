@@ -59,6 +59,9 @@ public class ComercioController {
 
 		md.addObject("comercio", comercio);
 
+		List<Produto> produtos = pr.findByComercio(comercio);
+		md.addObject("produtos", produtos);
+
 		return md;
 
 	}
