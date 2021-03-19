@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifrn.marketdelivery.models.Usuario;
 import br.edu.ifrn.marketdelivery.repositories.UsuarioRepository;
@@ -30,7 +31,7 @@ public class UsarioController {
 	}
 
 	@PostMapping
-	public String cadastrarUsuario(@Valid Usuario usuario, BindingResult result) {
+	public String cadastrarUsuario(@Valid Usuario usuario, BindingResult result, RedirectAttributes attributes) {
 
 		if (result.hasErrors()) {
 			return formUser(usuario);
@@ -38,6 +39,7 @@ public class UsarioController {
 
 		System.out.println(usuario);
 		ur.save(usuario);
+		attributes.addFlashAttribute("mensagem", "Usuário cadastrado com sucesso!");
 		return "redirect:/comercios";
 	}
 

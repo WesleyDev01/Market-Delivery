@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifrn.marketdelivery.models.Comercio;
 import br.edu.ifrn.marketdelivery.models.Produto;
@@ -34,7 +35,7 @@ public class ComercioController {
 	}
 
 	@PostMapping
-	public String salvar(@Valid Comercio comercio, BindingResult result) {
+	public String salvar(@Valid Comercio comercio, BindingResult result, RedirectAttributes attributes) {
 
 		if (result.hasErrors()) {
 			return formMarket(comercio);
@@ -42,6 +43,7 @@ public class ComercioController {
 
 		System.out.println(comercio);
 		cr.save(comercio);
+		attributes.addFlashAttribute("mensagem", "Comércio cadastrado com sucesso!");
 		return "redirect:/comercios";
 	}
 
@@ -75,7 +77,7 @@ public class ComercioController {
 	}
 
 	@PostMapping("/{idComercio}")
-	public ModelAndView adicionarProduto(@PathVariable Long idComercio, @Valid Produto produto, BindingResult result) {
+	public ModelAndView adicionarProduto(@PathVariable Long idComercio, @Valid Produto produto, BindingResult result, RedirectAttributes attributes) {
 		ModelAndView md = new ModelAndView();
 		Optional<Comercio> opt = cr.findById(idComercio);
 
@@ -92,6 +94,7 @@ public class ComercioController {
 		produto.setComercio(comercio);
 
 		pr.save(produto);
+		attributes.addFlashAttribute("mensagem", "Produto adicionado com sucesso!");
 
 		md.setViewName("redirect:/comercios/{idComercio}");
 
@@ -141,19 +144,20 @@ public class ComercioController {
 	}
 
 	@GetMapping("/{idComercio}/remover")
-	public String removerComercio(@PathVariable Long idComercio) {
+	public String removerComercio(@PathVariable Long idComercio, RedirectAttributes attributes) {
 		Optional<Comercio> opt = cr.findById(idComercio);
 		if (!opt.isEmpty()) {
 			Comercio comercio = opt.get();
 			List<Produto> produtos = pr.findByComercio(comercio);
 			pr.deleteAll(produtos);
 			cr.delete(comercio);
+			attributes.addFlashAttribute("mensagem", "Comércio removido com sucesso!");
 		}
 		return "redirect:/comercios";
 	}
 
 	@GetMapping("/{idComercio}/produtos/{idProduto}/remover")
-	public String removerProduto(@PathVariable Long idComercio, @PathVariable Long idProduto) {
+	public String removerProduto(@PathVariable Long idComercio, @PathVariable Long idProduto, RedirectAttributes attributes) {
 		Optional<Comercio> opt = cr.findById(idComercio);
 		Comercio comercio = opt.get();
 		List<Produto> produtos = pr.findByComercio(comercio);
@@ -161,6 +165,7 @@ public class ComercioController {
 			Optional<Produto> produto = pr.findById(idProduto);
 			if (!produto.isEmpty()) {
 				pr.deleteById(idProduto);
+				attributes.addFlashAttribute("mensagem", "Produto removido com sucesso!");
 			}
 			return "redirect:/comercios/{idComercio}";
 		}

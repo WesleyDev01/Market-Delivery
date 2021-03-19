@@ -13,11 +13,17 @@
 
 	<div th:replace="~{menu :: menu}"></div>
 
+	<div>
+		<h1 th:text="${comercio.nome}"></h1>
+	</div>
+	
+	<p th:if="${mensagem}" th:text=${mensagem}></p>
+
 	<div class="row">
 		<div class="s12">
 			<div class="card">
 				<div class="card-content">
-					<span class="card-title">Comércio</span>
+					<span class="card-title">Nossas informações:</span>
 					<p>
 						<strong>Id: </strong><span th:text="${comercio.id}"></span>
 					</p>
