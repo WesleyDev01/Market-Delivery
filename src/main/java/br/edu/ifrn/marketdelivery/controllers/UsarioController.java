@@ -3,8 +3,11 @@ package br.edu.ifrn.marketdelivery.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +30,12 @@ public class UsarioController {
 	}
 
 	@PostMapping
-	public String cadastrarUsuario(Usuario usuario) {
+	public String cadastrarUsuario(@Valid Usuario usuario, BindingResult result) {
+
+		if (result.hasErrors()) {
+			return formUser(usuario);
+		}
+
 		System.out.println(usuario);
 		ur.save(usuario);
 		return "redirect:/comercios";

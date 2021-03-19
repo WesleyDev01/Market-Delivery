@@ -3,8 +3,11 @@ package br.edu.ifrn.marketdelivery.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +34,12 @@ public class ComercioController {
 	}
 
 	@PostMapping
-	public String salvar(Comercio comercio) {
+	public String salvar(@Valid Comercio comercio, BindingResult result) {
+
+		if (result.hasErrors()) {
+			return formMarket(comercio);
+		}
+
 		System.out.println(comercio);
 		cr.save(comercio);
 		return "redirect:/comercios";
@@ -67,13 +75,17 @@ public class ComercioController {
 	}
 
 	@PostMapping("/{idComercio}")
-	public ModelAndView adicionarProduto(@PathVariable Long idComercio, Produto produto) {
+	public ModelAndView adicionarProduto(@PathVariable Long idComercio, @Valid Produto produto, BindingResult result) {
 		ModelAndView md = new ModelAndView();
 		Optional<Comercio> opt = cr.findById(idComercio);
 
 		if (opt.isEmpty()) {
 			md.setViewName("redirect:/comercios");
 			return md;
+		}
+
+		if (result.hasErrors()) {
+			return visualizarComercio(idComercio, produto);
 		}
 
 		Comercio comercio = opt.get();
