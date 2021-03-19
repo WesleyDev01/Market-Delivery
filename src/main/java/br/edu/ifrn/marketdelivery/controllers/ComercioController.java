@@ -46,7 +46,7 @@ public class ComercioController {
 	}
 
 	@GetMapping("/{id}")
-	public ModelAndView visualizarComercio(@PathVariable Long id) {
+	public ModelAndView visualizarComercio(@PathVariable Long id, Produto produto) {
 		ModelAndView md = new ModelAndView();
 		Optional<Comercio> opt = cr.findById(id);
 		if (opt.isEmpty()) {
@@ -100,6 +100,34 @@ public class ComercioController {
 		return md;
 	}
 
+	@GetMapping("/{idComercio}/produtos/{idProduto}/selecionar")
+	public ModelAndView selecionarProduto(@PathVariable Long idComercio, @PathVariable Long idProduto) {
+		ModelAndView md = new ModelAndView();
+		Optional<Comercio> optComercio = cr.findById(idComercio);
+		Optional<Produto> optProduto = pr.findById(idProduto);
+
+		if (optComercio.isEmpty() || optProduto.isEmpty()) {
+			md.setViewName("redirect:/comercios");
+			return md;
+		}
+
+		Comercio comercio = optComercio.get();
+		Produto produto = optProduto.get();
+
+		if (comercio.getId() != produto.getComercio().getId()) {
+			md.setViewName("redirect:/comercios");
+			return md;
+		}
+
+		md.setViewName("comercios/produtosComercio");
+		md.addObject("produto", produto);
+		md.addObject("comercio", comercio);
+		md.addObject("produtos", pr.findByComercio(comercio));
+
+		return md;
+
+	}
+
 	@GetMapping("/{idComercio}/remover")
 	public String removerComercio(@PathVariable Long idComercio) {
 		Optional<Comercio> opt = cr.findById(idComercio);
@@ -112,7 +140,7 @@ public class ComercioController {
 		return "redirect:/comercios";
 	}
 
-	@GetMapping("/{idComercio}/produto/{idProduto}/remover")
+	@GetMapping("/{idComercio}/produtos/{idProduto}/remover")
 	public String removerProduto(@PathVariable Long idComercio, @PathVariable Long idProduto) {
 		Optional<Comercio> opt = cr.findById(idComercio);
 		Comercio comercio = opt.get();
