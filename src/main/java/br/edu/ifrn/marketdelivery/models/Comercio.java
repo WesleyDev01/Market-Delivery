@@ -31,6 +31,10 @@ public class Comercio {
 	@NotBlank
 	private String telefone;
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Long getId() {
 		return id;
 	}

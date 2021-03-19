@@ -38,7 +38,10 @@
 					<td th:text="${c.email}"></td>
 					<td th:text="${c.endereco}"></td>
 					<td th:text="${c.telefone}"></td>
-					<td><a th:href="@{/comercios/{id}/remover(id=${c.id})}"><i
+					<td>
+					<a th:href="@{/comercios/{id}/selecionar(id=${c.id})}"><i
+							class="material-icons">edit</i></a>
+					<a th:href="@{/comercios/{id}/remover(id=${c.id})}"><i
 							class="material-icons">delete</i></a></td>
 				</tr>
 			</tbody>
