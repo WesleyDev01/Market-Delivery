@@ -5,6 +5,8 @@
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <title>Produtos</title>
 </head>
 <body>
@@ -89,6 +91,7 @@
 								<th>Preço</th>
 								<th>Quantidade</th>
 								<th>Disponível</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -102,6 +105,12 @@
 									<td th:case="true">Sim</td>
 									<td th:case="false">Não</td>
 								</div>
+								<td><a
+									th:href="
+									@{/comercios/{idComercio}/produto/{idProduto}/remover(idComercio=${p.comercio.id},
+									idProduto=${p.id})}">
+										<i class="material-icons">delete</i>
+								</a></td>
 							</tr>
 						</tbody>
 					</table>
