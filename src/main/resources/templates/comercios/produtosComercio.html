@@ -46,29 +46,38 @@
 		<div class="s12">
 			<div class="card">
 				<div class="card-content">
-					<span class="card-title">Adicionar Produto</span>
-					<form method="post" action="">
+					<span class="card-title">Adicionar Convidado</span>
+					<form
+						th:action="@{/comercios/{idComercio}(idComercio=${comercio.id})}"
+						method="post" th:object="${produto}">
 						<div>
-							<label>Nome: </label> <input type="text" name="nome">
+							<input type="hidden" th:field="*{id}" readonly="readonly">
 						</div>
 						<div>
-							<label>Categoria: </label> <input type="text" name="categoria">
+							<label>Nome: </label> <input type="text" 
+								th:field="*{nome}">
 						</div>
 						<div>
-							<label>Preço: </label> <input type="number" name="preco">
+							<label>Categoria: </label> <input type="text" 
+								th:field="*{categoria}">
+						</div>
+						<div>
+							<label>Preço: </label> <input type="number" 
+								th:field="*{preco}">
 						</div>
 						<div>
 							<label>Quantidade: </label> <input type="number"
-								name="quantidade">
+								th:field="*{quantidade}">
 						</div>
 
 						<div>
-							<label><input type="checkbox" checked name="disponivel"
-								onclick="return false;"> <span>Disponível</span> </label>
+							<label><input type="checkbox" checked
+								name="disponivel" onclick="return false;"> <span>Disponível</span>
+							</label>
 						</div>
+						<br></br>
 						<div>
-							<br></br>
-							<button type="submit" class="btn">Adicionar</button>
+							<button type="submit" class="btn">Salvar</button>
 							<button type="reset" class="btn">Limpar</button>
 						</div>
 					</form>
@@ -106,11 +115,11 @@
 									<td th:case="false">Não</td>
 								</div>
 								<td><a
-									th:href="
-									@{/comercios/{idComercio}/produto/{idProduto}/remover(idComercio=${p.comercio.id},
-									idProduto=${p.id})}">
-										<i class="material-icons">delete</i>
-								</a></td>
+									th:href="@{/comercios/{idComercio}/produtos/{idProduto}/selecionar(idComercio=${comercio.id}, idProduto=${p.id})}">
+										<i class="material-icons">edit</i>
+								</a> <a
+									th:href="@{/comercios/{idComercio}/produtos/{idProduto}/remover(idProduto=${p.id}, idComercio=${p.comercio.id})}"><i
+										class="material-icons">delete</i></a></td>
 							</tr>
 						</tbody>
 					</table>
