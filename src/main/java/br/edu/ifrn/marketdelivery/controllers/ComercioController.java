@@ -31,7 +31,7 @@ public class ComercioController {
 	}
 
 	@PostMapping
-	public String cadastrarComerio(Comercio comercio) {
+	public String salvar(Comercio comercio) {
 		System.out.println(comercio);
 		cr.save(comercio);
 		return "redirect:/comercios";
@@ -83,6 +83,20 @@ public class ComercioController {
 
 		md.setViewName("redirect:/comercios/{idComercio}");
 
+		return md;
+	}
+
+	@GetMapping("/{id}/selecionar")
+	public ModelAndView selecionarComercio(@PathVariable Long id) {
+		ModelAndView md = new ModelAndView();
+		Optional<Comercio> opt = cr.findById(id);
+		if (opt.isEmpty()) {
+			md.setViewName("redirect:/comercios");
+			return md;
+		}
+		Comercio comercio = opt.get();
+		md.setViewName("comercios/formComercio");
+		md.addObject("comercio", comercio);
 		return md;
 	}
 
