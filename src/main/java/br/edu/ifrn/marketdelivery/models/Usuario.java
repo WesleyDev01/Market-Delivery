@@ -1,18 +1,27 @@
 package br.edu.ifrn.marketdelivery.models;
 
+import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 @Table(name = "usuario", uniqueConstraints = { @UniqueConstraint(columnNames = { "cpf", "email", "login" }) })
-public class Usuario {
+public class Usuario implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -33,6 +42,10 @@ public class Usuario {
 	private String senha;
 	@NotNull
 	private boolean vip;
+
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Papel> papeis;
 
 	public Long getId() {
 		return id;
@@ -94,6 +107,18 @@ public class Usuario {
 		this.senha = senha;
 	}
 
+	public List<Papel> getPapeis() {
+		return papeis;
+	}
+
+	public void setPapeis(List<Papel> papeis) {
+		this.papeis = papeis;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public boolean isVip() {
 		return vip;
 	}
@@ -106,6 +131,41 @@ public class Usuario {
 	public String toString() {
 		return "Usuario [id=" + id + ", tipo=" + tipo + ", cpf=" + cpf + ", nome=" + nome + ", email=" + email
 				+ ", telefone=" + telefone + ", login=" + login + ", senha=" + senha + ", vip=" + vip + "]";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.papeis;
+	}
+
+	@Override
+	public String getPassword() {
+		return this.senha;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.login;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 
 }
