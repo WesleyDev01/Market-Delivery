@@ -6,4 +6,6 @@ import br.edu.ifrn.marketdelivery.models.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
+	Usuario findByLogin(String login);
+
 }
