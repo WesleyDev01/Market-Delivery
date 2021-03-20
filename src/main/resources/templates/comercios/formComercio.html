@@ -59,19 +59,20 @@
 					<p th:errors="*{endereco}"></p>
 			</div>
 			<div>
-				<label>Telefone: </label> <input type="text" id="tel"
-					th:field="*{telefone}" placeholder="(84)99999-9999" maxlength="14"
-					onkeyup="mascara_tel()"
-					onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-					<p th:errors="*{telefone}"></p>
-			</div>
-			<div>
 				<label>Cpf: </label> <input type="text" id="cpf"
 					th:field="*{cpfUsuario}" placeholder="___.___.-__" maxlength="14"
 					onkeyup="mascara_cpf()"
 					onkeypress="return event.charCode >= 48 && event.charCode <= 57">
 				<p th:errors="*{cpfUsuario}"></p>
 			</div>
+			<div>
+				<label>Telefone: </label> <input type="text" id="tel"
+					th:field="*{telefone}" placeholder="(84)99999-9999" maxlength="14"
+					onkeyup="mascara_tel()"
+					onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+					<p th:errors="*{telefone}"></p>
+			</div>
+			
 			<div>
 				<label>Taxa da entrega: </label> <input type="number"
 					th:field="*{taxaEntrega}">

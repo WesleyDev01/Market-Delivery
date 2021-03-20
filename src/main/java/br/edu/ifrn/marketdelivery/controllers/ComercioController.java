@@ -6,6 +6,9 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,19 +19,35 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifrn.marketdelivery.models.Comercio;
+import br.edu.ifrn.marketdelivery.models.PacoteDeCompra;
 import br.edu.ifrn.marketdelivery.models.Produto;
+import br.edu.ifrn.marketdelivery.models.Usuario;
 import br.edu.ifrn.marketdelivery.repositories.ComercioRepository;
 import br.edu.ifrn.marketdelivery.repositories.ProdutoRepository;
+import br.edu.ifrn.marketdelivery.repositories.UsuarioRepository;
 
 @Controller
 @RequestMapping("/comercios")
 public class ComercioController {
 
+	private Usuario usuario;
+	private PacoteDeCompra pacotedecompra;
+	
 	@Autowired
 	ComercioRepository cr;
 	@Autowired
 	ProdutoRepository pr;
+	@Autowired
+	private UsuarioRepository ur;
 
+	private void buscarUsuarioLogado() {
+		Authentication autenticado = SecurityContextHolder.getContext().getAuthentication();
+		if (!(autenticado instanceof AnonymousAuthenticationToken)) {
+			String login = autenticado.getName();
+			usuario = ur.findByLogin(login);
+		}
+	}
+	
 	@GetMapping("/cadastrarComercio")
 	public String formMarket(Comercio comercio) {
 		return "comercios/formComercio";
@@ -36,13 +55,12 @@ public class ComercioController {
 
 	@PostMapping
 	public String salvar(@Valid Comercio comercio, BindingResult result, RedirectAttributes attributes) {
-
+		
 		if (result.hasErrors()) {
 			return formMarket(comercio);
 		}
 
 		System.out.println(comercio);
-		cr.save(comercio);
 		attributes.addFlashAttribute("mensagem", "Comércio cadastrado com sucesso!");
 		return "redirect:/comercios";
 	}

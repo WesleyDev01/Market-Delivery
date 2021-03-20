@@ -24,6 +24,7 @@
 			<div class="card">
 				<div class="card-content">
 					<span class="card-title">Nossas informações:</span>
+					
 					<p>
 						<strong>Id: </strong><span th:text="${comercio.id}"></span>
 					</p>
@@ -52,7 +53,7 @@
 		<div class="s12">
 			<div class="card">
 				<div class="card-content">
-					<span class="card-title">Adicionar Convidado</span>
+					<span class="card-title">Adicionar Produto</span>
 					<form
 						th:action="@{/comercios/{idComercio}(idComercio=${comercio.id})}"
 						method="post" th:object="${produto}">
@@ -61,7 +62,7 @@
 						</div>
 						<div>
 							<label>Nome: </label> <input type="text" 
-								th:field="*{nome}">
+								th:field="${usuario.nome}">
 								<p th:errors="*{nome}"></p>
 						</div>
 						<div>

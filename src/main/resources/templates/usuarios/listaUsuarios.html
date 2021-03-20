@@ -25,7 +25,6 @@
 					<th>Email</th>
 					<th>Telefone</th>
 					<th>Login</th>
-					<th>Senha</th>
 					<th>VIP</th>
 					<th></th>
 				</tr>
@@ -39,7 +38,6 @@
 					<td th:text="${u.email}"></td>
 					<td th:text="${u.telefone}"></td>
 					<td th:text="${u.login}"></td>
-					<td th:text="${u.senha}"></td>
 					<div th:switch="${u.vip}">
 						<td th:case="true">Sim</td>
 						<td th:case="false">Não</td>

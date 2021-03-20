@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -21,12 +22,6 @@ public class PacoteDeCompra {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank
-	private int cpfUsuario;
-	@NotBlank
-	private int idProduto;
-	@NotBlank
-	private int idComercio;
-	@NotBlank
 	private int quantidadeProduto;
 	@NotBlank
 	private double precoTotal;
@@ -40,32 +35,13 @@ public class PacoteDeCompra {
 	@NotBlank
 	private boolean entrega;
 
+	@ManyToOne
+	private Usuario usuario;
+	@ManyToOne
+	private Produto produto;
+
 	public Long getId() {
 		return id;
-	}
-
-	public int getCpfUsuario() {
-		return cpfUsuario;
-	}
-
-	public void setCpfUsuario(int cpfUsuario) {
-		this.cpfUsuario = cpfUsuario;
-	}
-
-	public int getIdProduto() {
-		return idProduto;
-	}
-
-	public void setIdProduto(int idProduto) {
-		this.idProduto = idProduto;
-	}
-
-	public int getIdComercio() {
-		return idComercio;
-	}
-
-	public void setIdComercio(int idComercio) {
-		this.idComercio = idComercio;
 	}
 
 	public int getQuantidadeProduto() {
@@ -114,6 +90,22 @@ public class PacoteDeCompra {
 
 	public void setEntrega(boolean entrega) {
 		this.entrega = entrega;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
 }
