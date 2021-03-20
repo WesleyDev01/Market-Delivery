@@ -6,6 +6,9 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +25,18 @@ import br.edu.ifrn.marketdelivery.repositories.UsuarioRepository;
 @RequestMapping("/usuarios")
 public class UsarioController {
 
+	private Usuario usuario;
+
 	@Autowired
 	private UsuarioRepository ur;
+
+	private void buscarUsuarioLogado() {
+		Authentication autenticado = SecurityContextHolder.getContext().getAuthentication();
+		if (!(autenticado instanceof AnonymousAuthenticationToken)) {
+			String login = autenticado.getName();
+			usuario = ur.findByLogin(login);
+		}
+	}
 
 	@GetMapping("/cadastrarUsuario")
 	public String formUser(Usuario usuario) {
@@ -53,15 +66,17 @@ public class UsarioController {
 
 	@GetMapping("/{id}")
 	public ModelAndView visualizarPerfil(@PathVariable Long id) {
+		buscarUsuarioLogado();
+		id = usuario.getId();
 		ModelAndView md = new ModelAndView();
-		Optional<Usuario> opt = ur.findById(id);
-		if (opt.isEmpty()) {
-			md.setViewName("redirect:/comercios");
-			return md;
-		}
+		//Optional<Usuario> opt = ur.findById(id);
+		//if (opt.isEmpty()) {
+		//	md.setViewName("redirect:/comercios");
+		//	return md;
+		//}
 
 		md.setViewName("usuarios/perfilUsuario");
-		Usuario usuario = opt.get();
+		//Usuario usuario = opt.get();
 
 		md.addObject("usuario", usuario);
 
