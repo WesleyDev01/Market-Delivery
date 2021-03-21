@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<title>Produtos</title>
+</head>
+<body>
+
+	<div th:replace="~{menu :: menu}"></div>
+
+	<div>
+		<h1 th:text="${comercio.nome}"></h1>
+	</div>
+
+	<p th:if="${mensagem}" th:text=${mensagem}></p>
+
+	<div class="row">
+		<div class="s12">
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title">Informações do comércio:</span>
+					<p>
+						<strong>Nome: </strong><span th:text="${comercio.nome}"></span>
+					</p>
+					<p>
+						<strong>Endereço: </strong><span th:text="${comercio.endereco}"></span>
+					</p>
+					<p>
+						<strong>E-mail: </strong><span th:text="${comercio.email}"></span>
+					</p>
+					<p>
+						<strong>Telefone: </strong><span th:text="${comercio.telefone}"></span>
+					</p>
+					<p>
+						<strong>Taxa da entrega: </strong><span
+							th:text="${comercio.taxaEntrega}"></span><strong> R$</strong>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div sec:authorize="hasRole('CLIENTE')" class="row">
+		<div class="s12">
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title">Produto Desejado:</span>
+					<form
+						th:action="@{/comercios/{idComercio}/produtos/{idProduto}/adicionar(idComercio=${comercio.id}, idProduto=${produto.id})}"
+						method="post" th:object="${produto}">
+						<div>
+							<label>Nome: </label> <p th:text="${produto.nome}"></p> 
+						</div>
+						<div>
+							<label>Categoria: </label> <p th:text="${produto.categoria}"></p>
+						</div>
+						<div>
+							<label>Preço: </label> <p th:text="${produto.preco}"></p>
+						</div>
+						<br></br>
+						<div>
+							<button type="submit" class="btn">Comprar</button>
+							<button type="reset" class="btn">Limpar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
