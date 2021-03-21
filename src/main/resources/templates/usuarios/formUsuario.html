@@ -49,9 +49,16 @@
 				<p th:errors="*{nome}"></p>
 			</div>
 			<div>
-				<label>Tipo: </label> <input type="number" th:field="*{tipo} "
-					min="0" max="2">
-				<p th:errors="*{tipo}"></p>
+				<p>
+					<label> <input th:field="*{tipo}" th:value="${1}"
+						name="tipousuario" type="radio" checked /> <span>Cliente</span>
+					</label>
+				</p>
+				<p>
+					<label> <input th:field="*{tipo}" th:value="${2}"
+						name="tipousuario" type="radio" /> <span>Proprietário</span>
+					</label>
+				</p>
 			</div>
 			<div>
 				<label>Cpf: </label> <input type="text" id="cpf" th:field="*{cpf}"

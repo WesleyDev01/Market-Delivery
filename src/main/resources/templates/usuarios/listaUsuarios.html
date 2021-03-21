@@ -5,6 +5,8 @@
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <title>Lista de usuários</title>
 </head>
 <body>
@@ -14,6 +16,8 @@
 	<div class="container">
 
 		<h1>Usuários</h1>
+
+		<p th:if="${mensagem}" th:text="${mensagem}"></p>
 
 		<table class="highlight">
 			<thead>
@@ -29,10 +33,18 @@
 					<th></th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody sec:authorize="hasRole('ADMINISTRADOR')">
 				<tr th:each="u : ${usuarios}">
 					<td th:text="${u.id}"></td>
-					<td th:text="${u.tipo}"></td>
+					<div th:if="${u.tipo == 1}">
+						<td th:text="Cliente"></td>
+					</div>
+					<div th:if="${u.tipo == 2}">
+						<td th:text="Proprietário"></td>
+					</div>
+					<div th:if="${u.tipo != 1 && u.tipo !=2}">
+						<td th:text="Administrador"></td>
+					</div>
 					<td th:text="${u.nome}"></td>
 					<td th:text="${u.cpf}"></td>
 					<td th:text="${u.email}"></td>
@@ -42,6 +54,10 @@
 						<td th:case="true">Sim</td>
 						<td th:case="false">Não</td>
 					</div>
+					<td><a
+						th:href="@{/usuarios/listaUsuarios/{idUsuario}(idUsuario=${u.id})}">
+							<i class="material-icons">delete</i>
+					</a></td>
 				</tr>
 			</tbody>
 		</table>

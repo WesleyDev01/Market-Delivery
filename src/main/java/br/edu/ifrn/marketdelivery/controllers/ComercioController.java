@@ -23,6 +23,7 @@ import br.edu.ifrn.marketdelivery.models.PacoteDeCompra;
 import br.edu.ifrn.marketdelivery.models.Produto;
 import br.edu.ifrn.marketdelivery.models.Usuario;
 import br.edu.ifrn.marketdelivery.repositories.ComercioRepository;
+import br.edu.ifrn.marketdelivery.repositories.PacoteDeCompraRepository;
 import br.edu.ifrn.marketdelivery.repositories.ProdutoRepository;
 import br.edu.ifrn.marketdelivery.repositories.UsuarioRepository;
 
@@ -32,13 +33,15 @@ public class ComercioController {
 
 	private Usuario usuario;
 	private PacoteDeCompra pacotedecompra;
-	
+
 	@Autowired
 	ComercioRepository cr;
 	@Autowired
 	ProdutoRepository pr;
 	@Autowired
 	private UsuarioRepository ur;
+	@Autowired
+	private PacoteDeCompraRepository pacr;
 
 	private void buscarUsuarioLogado() {
 		Authentication autenticado = SecurityContextHolder.getContext().getAuthentication();
@@ -47,7 +50,7 @@ public class ComercioController {
 			usuario = ur.findByLogin(login);
 		}
 	}
-	
+
 	@GetMapping("/cadastrarComercio")
 	public String formMarket(Comercio comercio) {
 		return "comercios/formComercio";
@@ -55,26 +58,31 @@ public class ComercioController {
 
 	@PostMapping
 	public String salvar(@Valid Comercio comercio, BindingResult result, RedirectAttributes attributes) {
-		
+		buscarUsuarioLogado();
 		if (result.hasErrors()) {
 			return formMarket(comercio);
 		}
-
+		String cpfUsuario = usuario.getCpf();
+		comercio.setCpfUsuario(cpfUsuario);
 		System.out.println(comercio);
+		cr.save(comercio);
 		attributes.addFlashAttribute("mensagem", "Comércio cadastrado com sucesso!");
 		return "redirect:/comercios";
 	}
 
 	@GetMapping
 	public ModelAndView listarComercios() {
+		buscarUsuarioLogado();
 		List<Comercio> comercios = cr.findAll();
 		ModelAndView mv = new ModelAndView("home");
+		mv.addObject("usuario", usuario);
 		mv.addObject("comercios", comercios);
 		return mv;
 	}
 
 	@GetMapping("/{id}")
 	public ModelAndView visualizarComercio(@PathVariable Long id, Produto produto) {
+		buscarUsuarioLogado();
 		ModelAndView md = new ModelAndView();
 		Optional<Comercio> opt = cr.findById(id);
 		if (opt.isEmpty()) {
@@ -86,6 +94,7 @@ public class ComercioController {
 		Comercio comercio = opt.get();
 
 		md.addObject("comercio", comercio);
+		md.addObject("usuario", usuario);
 
 		List<Produto> produtos = pr.findByComercio(comercio);
 		md.addObject("produtos", produtos);
@@ -94,10 +103,11 @@ public class ComercioController {
 
 	}
 
-	@PostMapping("/{idComercio}")
-	public ModelAndView adicionarProduto(@PathVariable Long idComercio, @Valid Produto produto, BindingResult result, RedirectAttributes attributes) {
+	@PostMapping("/{codigoComercio}")
+	public ModelAndView adicionarProduto(@PathVariable Long codigoComercio, @Valid Produto produto,
+		BindingResult result, RedirectAttributes attributes) {
 		ModelAndView md = new ModelAndView();
-		Optional<Comercio> opt = cr.findById(idComercio);
+		Optional<Comercio> opt = cr.findById(codigoComercio);
 
 		if (opt.isEmpty()) {
 			md.setViewName("redirect:/comercios");
@@ -105,16 +115,23 @@ public class ComercioController {
 		}
 
 		if (result.hasErrors()) {
-			return visualizarComercio(idComercio, produto);
+			return visualizarComercio(codigoComercio, produto);
 		}
 
+		Long idDoProduto = produto.getId();
 		Comercio comercio = opt.get();
 		produto.setComercio(comercio);
 
-		pr.save(produto);
-		attributes.addFlashAttribute("mensagem", "Produto adicionado com sucesso!");
+		System.out.println("Id do produto: " + produto.getId());
 
-		md.setViewName("redirect:/comercios/{idComercio}");
+		attributes.addFlashAttribute("mensagem", "Produto adicionado com sucesso!");
+		produto.setId(idDoProduto);
+		pr.save(produto);
+
+		System.out.println("Id novo do produto: " + produto.getId());
+
+		md.addObject("produto", produto);
+		md.setViewName("redirect:/comercios/{codigoComercio}");
 
 		return md;
 	}
@@ -135,6 +152,7 @@ public class ComercioController {
 
 	@GetMapping("/{idComercio}/produtos/{idProduto}/selecionar")
 	public ModelAndView selecionarProduto(@PathVariable Long idComercio, @PathVariable Long idProduto) {
+		buscarUsuarioLogado();
 		ModelAndView md = new ModelAndView();
 		Optional<Comercio> optComercio = cr.findById(idComercio);
 		Optional<Produto> optProduto = pr.findById(idProduto);
@@ -155,7 +173,80 @@ public class ComercioController {
 		md.setViewName("comercios/produtosComercio");
 		md.addObject("produto", produto);
 		md.addObject("comercio", comercio);
+		md.addObject("usuario", usuario);
 		md.addObject("produtos", pr.findByComercio(comercio));
+
+		return md;
+
+	}
+
+	@GetMapping("/{idComercio}/produtos/{idProduto}/adicionar")
+	public ModelAndView comprarProduto(@PathVariable Long idComercio, @PathVariable Long idProduto) {
+		ModelAndView md = new ModelAndView();
+		buscarUsuarioLogado();
+		
+		Optional<Comercio> optComercio = cr.findById(idComercio);
+		Optional<Produto> optProduto = pr.findById(idProduto);
+
+		if (optComercio.isEmpty() || optProduto.isEmpty()) {
+			md.setViewName("redirect:/comercios");
+			return md;
+		}
+
+		Comercio comercio = optComercio.get();
+		Produto produto = optProduto.get();
+
+		if (comercio.getId() != produto.getComercio().getId()) {
+			md.setViewName("redirect:/comercios");
+			return md;
+		}
+
+		md.setViewName("comercios/comprarProduto");
+		md.addObject("produto", produto);
+		md.addObject("comercio", comercio);
+		md.addObject("usuario", usuario);
+		md.addObject("produtos", pr.findByComercio(comercio));
+
+		// System.out.println(produto.getId());
+		// System.out.println(usuario.getId());
+		// System.out.println(pacotedecompra.isPagamento());
+
+		return md;
+
+	}
+
+	@PostMapping("/{idComercio}/produtos/{idProduto}/adicionar")
+	public ModelAndView confirmarCompraProduto(@PathVariable Long idComercio, @PathVariable Long idProduto) {
+		buscarUsuarioLogado();
+		ModelAndView md = new ModelAndView();
+		PacoteDeCompra pacote = new PacoteDeCompra();
+		Optional<Comercio> optComercio = cr.findById(idComercio);
+		Optional<Produto> optProduto = pr.findById(idProduto);
+
+		if (optComercio.isEmpty() || optProduto.isEmpty()) {
+			md.setViewName("redirect:/comercios");
+			return md;
+		}
+
+		Comercio comercio = optComercio.get();
+		Produto produto = optProduto.get();
+
+		if (comercio.getId() != produto.getComercio().getId()) {
+			md.setViewName("redirect:/comercios");
+			return md;
+		}
+
+		md.setViewName("redirect:/comercios/{idComercio}");
+		md.addObject("produto", produto);
+		md.addObject("comercio", comercio);
+		md.addObject("usuario", usuario);
+		md.addObject("produtos", pr.findByComercio(comercio));
+		
+		pacote.setPagamento(false);
+		pacote.setProduto(produto);
+		pacote.setUsuario(usuario);
+		
+		pacr.save(pacote);
 
 		return md;
 
@@ -175,7 +266,8 @@ public class ComercioController {
 	}
 
 	@GetMapping("/{idComercio}/produtos/{idProduto}/remover")
-	public String removerProduto(@PathVariable Long idComercio, @PathVariable Long idProduto, RedirectAttributes attributes) {
+	public String removerProduto(@PathVariable Long idComercio, @PathVariable Long idProduto,
+		RedirectAttributes attributes) {
 		Optional<Comercio> opt = cr.findById(idComercio);
 		Comercio comercio = opt.get();
 		List<Produto> produtos = pr.findByComercio(comercio);

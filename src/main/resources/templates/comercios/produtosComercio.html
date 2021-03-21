@@ -16,7 +16,7 @@
 	<div>
 		<h1 th:text="${comercio.nome}"></h1>
 	</div>
-	
+
 	<p th:if="${mensagem}" th:text=${mensagem}></p>
 
 	<div class="row">
@@ -24,10 +24,6 @@
 			<div class="card">
 				<div class="card-content">
 					<span class="card-title">Nossas informações:</span>
-					
-					<p>
-						<strong>Id: </strong><span th:text="${comercio.id}"></span>
-					</p>
 					<p>
 						<strong>Nome: </strong><span th:text="${comercio.nome}"></span>
 					</p>
@@ -49,46 +45,91 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div th:if="${comercio.cpfUsuario == usuario.cpf}"
+		sec:authorize="hasRole('PROPRIETARIO')" class="row">
 		<div class="s12">
 			<div class="card">
 				<div class="card-content">
-					<span class="card-title">Adicionar Produto</span>
+					<span class="card-title">Atualizar produto</span>
 					<form
-						th:action="@{/comercios/{idComercio}(idComercio=${comercio.id})}"
+						th:action="@{/comercios/{codigoComercio}(codigoComercio=${comercio.id})}"
 						method="post" th:object="${produto}">
 						<div>
-							<input type="hidden" th:field="*{id}" readonly="readonly">
+							<input type="hidden" name="id" th:field="*{id}"
+								readonly="readonly">
 						</div>
 						<div>
-							<label>Nome: </label> <input type="text" 
-								th:field="${usuario.nome}">
-								<p th:errors="*{nome}"></p>
+							<label>Nome: </label> <input type="text" name="nome"
+								th:value="${produto.nome}">
+							<p th:errors="*{nome}"></p>
 						</div>
 						<div>
-							<label>Categoria: </label> <input type="text" 
-								th:field="*{categoria}">
-								<p th:errors="*{categoria}"></p>
+							<label>Categoria: </label> <input type="text" name="categoria"
+								th:value="${produto.categoria}">
+							<p th:errors="*{categoria}"></p>
 						</div>
 						<div>
-							<label>Preço: </label> <input type="number" 
-								th:field="*{preco}">
-								<p th:errors="*{preco}"></p>
+							<label>Preço: </label> <input type="number" name="preco"
+								th:value="${produto.preco}">
+							<p th:errors="*{preco}"></p>
 						</div>
 						<div>
 							<label>Quantidade: </label> <input type="number"
-								th:field="*{quantidade}">
-								<p th:errors="*{quantidade}"></p>
+								name="quantidade" th:value="${produto.quantidade}">
+							<p th:errors="*{quantidade}"></p>
 						</div>
 
 						<div>
-							<label><input type="checkbox" checked
-								name="disponivel" onclick="return false;"> <span>Disponível</span>
-							</label>
+							<label><input type="checkbox" checked name="disponivel"> <span>Disponível</span> </label>
 						</div>
 						<br></br>
 						<div>
 							<button type="submit" class="btn">Salvar</button>
+							<button type="reset" class="btn">Limpar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:if="${comercio.cpfUsuario == usuario.cpf}"
+		sec:authorize="hasRole('PROPRIETARIO')" class="row">
+		<div class="s12">
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title">Adicionar produto:</span>
+					<form
+						th:action="@{/comercios/{codigoComercio}(codigoComercio=${comercio.id})}"
+						method="post" th:object="${produto}">
+						<div>
+							<label>Nome: </label> <input type="text" name="nome">
+							<p th:value="${produto.nome}"></p>
+							<p th:errors="*{nome}"></p>
+						</div>
+						<div>
+							<label>Categoria: </label> <input type="text" name="categoria">
+							<p th:value="${produto.categoria}"></p>
+							<p th:errors="*{categoria}"></p>
+						</div>
+						<div>
+							<label>Preço: </label> <input type="number" name="preco">
+							<p th:value="${produto.preco}">
+								</p>
+								<p th:errors="*{preco}"></p>
+						</div>
+						<div>
+							<label>Quantidade: </label> <input type="number"
+								name="quantidade" th:value="${produto.quantidade}">
+							<p th:errors="*{quantidade}"></p>
+						</div>
+						<div>
+							<label><input type="checkbox" checked name="disponivel"
+								onclick="return false;"> <span>Disponível</span> </label>
+						</div>
+						<br></br>
+						<div>
+							<button type="submit" class="btn">Adicionar</button>
 							<button type="reset" class="btn">Limpar</button>
 						</div>
 					</form>
@@ -125,12 +166,16 @@
 									<td th:case="true">Sim</td>
 									<td th:case="false">Não</td>
 								</div>
-								<td><a
+								<td><a sec:authorize="hasRole('PROPRIETARIO')" th:if="${comercio.cpfUsuario == usuario.cpf}"
 									th:href="@{/comercios/{idComercio}/produtos/{idProduto}/selecionar(idComercio=${comercio.id}, idProduto=${p.id})}">
 										<i class="material-icons">edit</i>
-								</a> <a
-									th:href="@{/comercios/{idComercio}/produtos/{idProduto}/remover(idProduto=${p.id}, idComercio=${p.comercio.id})}"><i
-										class="material-icons">delete</i></a></td>
+								</a> <a sec:authorize="hasRole('PROPRIETARIO')"
+									th:if="${comercio.cpfUsuario == usuario.cpf}"
+									th:href="@{/comercios/{idComercio}/produtos/{idProduto}/remover(idComercio=${comercio.id}, idProduto=${p.id})}"><i
+										class="material-icons">delete</i></a> <a th:if="${p.disponivel == true}"
+									sec:authorize="hasRole('CLIENTE')"
+									th:href="@{/comercios/{idComercio}/produtos/{idProduto}/adicionar(idComercio=${comercio.id}, idProduto=${p.id})}"><i
+										class="material-icons">add</i></a></td>
 							</tr>
 						</tbody>
 					</table>

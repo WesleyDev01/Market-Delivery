@@ -7,13 +7,13 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-	
+
 <title>Market Delivery</title>
 </head>
 <body>
 
 	<div th:replace="~{menu :: menu}"></div>
-	
+
 	<h1>Seja bem-vindo(a) ao Market Delivery</h1>
 
 	<div class="container">
@@ -32,18 +32,26 @@
 					<th></th>
 				</tr>
 			</thead>
+
 			<tbody>
 				<tr th:each="c : ${comercios}">
 					<td th:text="${c.id}"></td>
-					<td><a th:href="@{/comercios/{id}(id=${c.id})}"><span
-							th:text="${c.nome}"></span></a></td>
+					<div sec:authorize=isAuthenticated()>
+						<td><a th:href="@{/comercios/{id}(id=${c.id})}"><span
+								th:text="${c.nome}"></span></a></td>
+					</div>
+					<div sec:authorize=!isAuthenticated()>
+						<td th:text="${c.nome}"></td>
+					</div>
 					<td th:text="${c.email}"></td>
 					<td th:text="${c.endereco}"></td>
 					<td th:text="${c.telefone}"></td>
-					<td>
-					<a th:href="@{/comercios/{id}/selecionar(id=${c.id})}"><i
-							class="material-icons">edit</i></a>
-					<a th:href="@{/comercios/{id}/remover(id=${c.id})}"><i
+					<td><a th:if="${c.cpfUsuario == usuario.cpf}"
+						sec:authorize="hasAnyRole('PROPRIETARIO','ADMINISTRADOR')"
+						th:href="@{/comercios/{id}/selecionar(id=${c.id})}"><i
+							class="material-icons">edit</i></a> <a
+						sec:authorize="hasRole('ADMINISTRADOR')"
+						th:href="@{/comercios/{id}/remover(id=${c.id})}"><i
 							class="material-icons">delete</i></a></td>
 				</tr>
 			</tbody>

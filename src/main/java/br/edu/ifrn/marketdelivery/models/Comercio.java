@@ -17,7 +17,6 @@ public class Comercio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank
 	private String cpfUsuario;
 	@NotNull
 	private int taxaEntrega;
