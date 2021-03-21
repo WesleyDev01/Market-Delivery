@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<title>Lista de compras</title>
+</head>
+<body>
+
+	<div th:replace="~{menu :: menu}"></div>
+
+	<div class="container">
+
+		<h1>Compras</h1>
+
+		<p th:if="${mensagem}" th:text="${mensagem}"></p>
+
+		<table class="highlight">
+			<thead>
+				<tr>
+					<th>Cliente</th>
+					<th>N° da compra</th>
+					<th>Pagamento</th>
+					<th>Produto</th>
+					<th>Categoria</th>
+					<th>Preço</th>
+					<th>N° identificador</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="p : ${pacotes}">
+					<td th:text="${p.usuario.nome}"></td>
+					<td th:text="${p.id}"></td>
+					<div th:if="${p.pagamento == false}">
+						<td th:text="Pendente"></td>
+					</div>
+					<div th:if="${p.pagamento == true}">
+						<td th:text="Pago"></td>
+					</div>
+					<td th:text="${p.produto.nome}"></td>
+					<td th:text="${p.produto.categoria}"></td>
+					<td th:text="${p.produto.preco}"></td>
+					<td th:text="${p.produto.id}"></td>
+					<td><a
+						th:href="@{/usuarios/listaCompras/{idCompra}(idCompra=${p.id})}">
+							<i class="material-icons">delete</i>
+					</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</body>
+</html>
