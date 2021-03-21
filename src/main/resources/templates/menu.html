@@ -12,11 +12,12 @@
 			<a href="/" class="brand-logo">Market Delivery</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li><a href="/">Home</a></li>
-				<li><a href="/usuarios/cadastrarUsuario">Cadastre-se</a></li>
-				<li sec:authorize="hasAnyRole('CLIENTE', 'PROPRIETARIO')"><a href="/usuarios/perfilUsuario">Meu perfil</a></li>
+				<li sec:authorize="hasRole('CLIENTE')"><a href="/usuarios/listaCompras">Minhas Compras</a></li>
 				<li sec:authorize="hasRole('ADMINISTRADOR')"><a href="/usuarios/listaUsuarios">Usuarios</a></li>
-				<li sec:authorize="hasAnyRole('PROPRIETARIO', 'ADMINISTRADOR')"><a href="/comercios/cadastrarComercio">Cadastrar seu comércio</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/usuarios/cadastrarUsuario">Cadastre-se</a></li>
+				<li sec:authorize="hasAnyRole('PROPRIETARIO')"><a href="/comercios/cadastrarComercio">Cadastrar seu comércio</a></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/login">Login</a></li>
+				<li sec:authorize=isAuthenticated()><a href="/logout">Logout</a></li>
 			</ul>
 		</div>
 	</nav>
