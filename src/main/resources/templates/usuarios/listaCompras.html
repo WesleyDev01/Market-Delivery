@@ -9,43 +9,44 @@
 	rel="stylesheet">
 <title>Lista de compras</title>
 </head>
-<body>
+<body class="#212121 grey darken-4">
 
 	<div th:replace="~{menu :: menu}"></div>
 
 	<div class="container">
 
-		<h1>Compras</h1>
+		<h1 style="text-align: center" class="grey-text text-lighten-2">Compras</h1>
 
 		<p th:if="${mensagem}" th:text="${mensagem}"></p>
 
 		<table class="highlight">
 			<thead>
 				<tr>
-					<th>Cliente</th>
-					<th>N° da compra</th>
-					<th>Pagamento</th>
-					<th>Produto</th>
-					<th>Categoria</th>
-					<th>Preço</th>
-					<th>N° identificador</th>
-					<th></th>
+					<th class="#64dd17 light-green accent-4">Cliente</th>
+					<th class="#64dd17 light-green accent-4">N° da compra</th>
+					<th class="#64dd17 light-green accent-4">Pagamento</th>
+					<th class="#64dd17 light-green accent-4">Produto</th>
+					<th class="#64dd17 light-green accent-4">Categoria</th>
+					<th class="#64dd17 light-green accent-4">Preço</th>
+					<th class="#64dd17 light-green accent-4">N° identificador</th>
+					<th class="#64dd17 light-green accent-4"></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="p : ${pacotes}">
-					<td th:text="${p.usuario.nome}"></td>
-					<td th:text="${p.id}"></td>
+					<td class="grey-text text-lighten-2" th:text="${p.usuario.nome}"></td>
+					<td class="grey-text text-lighten-2" th:text="${p.id}"></td>
 					<div th:if="${p.pagamento == false}">
-						<td th:text="Pendente"></td>
+						<td class="grey-text text-lighten-2" th:text="Pendente"></td>
 					</div>
 					<div th:if="${p.pagamento == true}">
-						<td th:text="Pago"></td>
+						<td class="grey-text text-lighten-2" th:text="Pago"></td>
 					</div>
-					<td th:text="${p.produto.nome}"></td>
-					<td th:text="${p.produto.categoria}"></td>
-					<td th:text="${p.produto.preco}"></td>
-					<td th:text="${p.produto.id}"></td>
+					<td class="grey-text text-lighten-2" th:text="${p.produto.nome}"></td>
+					<td class="grey-text text-lighten-2"
+						th:text="${p.produto.categoria}"></td>
+					<td class="grey-text text-lighten-2" th:text="${p.produto.preco}"></td>
+					<td class="grey-text text-lighten-2" th:text="${p.produto.id}"></td>
 					<td><a
 						th:href="@{/usuarios/listaCompras/{idCompra}(idCompra=${p.id})}">
 							<i class="material-icons">delete</i>
@@ -55,5 +56,8 @@
 		</table>
 
 	</div>
+
+	<div th:replace="~{rodape :: rodape}"></div>
+
 </body>
 </html>

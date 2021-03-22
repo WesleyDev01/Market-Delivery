@@ -9,41 +9,45 @@
 	rel="stylesheet">
 <title>Login</title>
 </head>
-<body>
+<body class="#212121 grey darken-4">
 
 	<div th:replace="~{menu :: menu}"></div>
 
 	<div class="container">
 
-		<h1>Entrar:</h1>
+		<h1 style="text-align: center" class="grey-text text-lighten-2">Entrar:</h1>
 		<div id="login">
 			<form action="" method="post">
 				<div class="row">
 					<div class="col-4 center">
-						<label>Login</label> 
-						<input type="text" name="username">
+						<label style="text-align: center" class="grey-text text-lighten-2">Login</label>
+						<input class="grey-text text-lighten-2" type="text"
+							name="username">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-4 center">
-						<label>Senha</label> 
-						<input type="password" name="password">
+						<label style="text-align: center" class="grey-text text-lighten-2">Senha</label>
+						<input class="grey-text text-lighten-2" type="password"
+							name="password">
 					</div>
 				</div>
-				
-				
-				
+
+
+
 				<div class="row">
 					<div class="col-4 center">
-						<button class="btn" type="submit">Entrar</button> 
+						<button class="btn" type="submit">Entrar</button>
 						<button class="btn" type="reset">Limpar</button>
 					</div>
 				</div>
-				
+
 			</form>
 		</div>
 
 	</div>
-	
+
+	<div th:replace="~{rodape :: rodape}"></div>
+
 </body>
 </html>

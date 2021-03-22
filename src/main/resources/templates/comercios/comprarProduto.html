@@ -9,58 +9,76 @@
 	rel="stylesheet">
 <title>Produtos</title>
 </head>
-<body>
+<body class="#212121 grey darken-4">
 
 	<div th:replace="~{menu :: menu}"></div>
 
 	<div>
-		<h1 th:text="${comercio.nome}"></h1>
+		<h1 style="text-align: center" class="grey-text text-lighten-2"
+			th:text="${comercio.nome}"></h1>
 	</div>
 
 	<p th:if="${mensagem}" th:text=${mensagem}></p>
 
-	<div class="row">
+	<p class="#64dd17 light-green accent-4">.</p>
+
+
+	<div class="row #64dd17 light-green accent-4">
 		<div class="s12">
-			<div class="card">
+			<div class="card #212121 grey darken-4">
 				<div class="card-content">
-					<span class="card-title">Informações do comércio:</span>
+					<span class="card-title grey-text text-lighten-2">Informações
+						do comércio:</span>
 					<p>
-						<strong>Nome: </strong><span th:text="${comercio.nome}"></span>
+						<strong class="grey-text text-lighten-2"> Nome: </strong><span
+							class="grey-text text-lighten-2" th:text="${comercio.nome}"></span>
 					</p>
 					<p>
-						<strong>Endereço: </strong><span th:text="${comercio.endereco}"></span>
+						<strong class="grey-text text-lighten-2">Endereço: </strong><span
+							class="grey-text text-lighten-2" th:text="${comercio.endereco}"></span>
 					</p>
 					<p>
-						<strong>E-mail: </strong><span th:text="${comercio.email}"></span>
+						<strong class="grey-text text-lighten-2">E-mail: </strong><span
+							class="grey-text text-lighten-2" th:text="${comercio.email}"></span>
 					</p>
 					<p>
-						<strong>Telefone: </strong><span th:text="${comercio.telefone}"></span>
+						<strong class="grey-text text-lighten-2">Telefone: </strong><span
+							class="grey-text text-lighten-2" th:text="${comercio.telefone}"></span>
 					</p>
 					<p>
-						<strong>Taxa da entrega: </strong><span
-							th:text="${comercio.taxaEntrega}"></span><strong> R$</strong>
+						<strong class="grey-text text-lighten-2">Taxa da entrega:
+						</strong><span class="grey-text text-lighten-2"
+							th:text="${comercio.taxaEntrega}"></span><strong
+							class="grey-text text-lighten-2"> R$</strong>
 					</p>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div sec:authorize="hasRole('CLIENTE')" class="row">
+	<div sec:authorize="hasRole('CLIENTE')"
+		class="row #64dd17 light-green accent-4">
 		<div class="s12">
-			<div class="card">
+			<div class="card #212121 grey darken-4">
 				<div class="card-content">
-					<span class="card-title">Produto Desejado:</span>
+					<span class="card-title grey-text text-lighten-2">Produto
+						Desejado:</span>
 					<form
 						th:action="@{/comercios/{idComercio}/produtos/{idProduto}/adicionar(idComercio=${comercio.id}, idProduto=${produto.id})}"
 						method="post" th:object="${produto}">
 						<div>
-							<label>Nome: </label> <p th:text="${produto.nome}"></p> 
+							<label class="grey-text text-lighten-2"><h6>Nome:</h6> </label>
+							<p class="grey-text text-lighten-2" th:text="${produto.nome}"></p>
 						</div>
 						<div>
-							<label>Categoria: </label> <p th:text="${produto.categoria}"></p>
+							<label class="grey-text text-lighten-2"><h6>Categoria:</h6>
+							</label>
+							<p class="grey-text text-lighten-2"
+								th:text="${produto.categoria}"></p>
 						</div>
 						<div>
-							<label>Preço: </label> <p th:text="${produto.preco}"></p>
+							<label class="grey-text text-lighten-2"><h6>Preço:</h6> </label>
+							<p class="grey-text text-lighten-2" th:text="${produto.preco}"></p>
 						</div>
 						<br></br>
 						<div>
@@ -72,6 +90,8 @@
 			</div>
 		</div>
 	</div>
+
+	<div th:replace="~{rodape :: rodape}"></div>
 
 </body>
 </html>

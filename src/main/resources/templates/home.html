@@ -7,46 +7,59 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
+<link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
 
 <title>Market Delivery</title>
 </head>
-<body>
+<body class="#212121 grey darken-4">
 
 	<div th:replace="~{menu :: menu}"></div>
 
-	<h1>Seja bem-vindo(a) ao Market Delivery</h1>
+	<h1 style="text-align: center" class="grey-text text-lighten-2">Seja
+		bem-vindo(a) ao Market Delivery</h1>
+
 
 	<div class="container">
-
-		<h1>Comércios disponíveis</h1>
+		<h1 style="text-align: center" class="grey-text text-lighten-2">Comércios
+			disponíveis</h1>
 
 		<p th:if="${mensagem}" th:text="${mensagem}"></p>
 		<table class="highlight">
 			<thead>
 				<tr>
-					<th>Id</th>
-					<th>Nome</th>
-					<th>Email</th>
-					<th>Endereço</th>
-					<th>Telefone</th>
-					<th></th>
+					<th class="#64dd17 light-green accent-4">Id</th>
+					<th class="#64dd17 light-green accent-4"><i
+						class="em em-european_post_office" aria-role="presentation"
+						aria-label="EUROPEAN POST OFFICE"></i> Nome</th>
+					<th class="#64dd17 light-green accent-4"><i
+						class="em em-email" aria-role="presentation" aria-label="ENVELOPE"></i>
+						Email</th>
+					<th class="#64dd17 light-green accent-4"><i
+						class="em em-information_source" aria-role="presentation"
+						aria-label="INFORMATION SOURCE"></i> Endereço</th>
+					<th class="#64dd17 light-green accent-4"><i
+						class="em em-phone" aria-role="presentation"
+						aria-label="BLACK TELEPHONE"></i> Telefone</th>
+					<th class="#64dd17 light-green accent-4"></th>
 				</tr>
 			</thead>
 
 			<tbody>
 				<tr th:each="c : ${comercios}">
-					<td th:text="${c.id}"></td>
+					<td class="grey-text text-lighten-2" th:text="${c.id}"></td>
 					<div sec:authorize=isAuthenticated()>
-						<td><a th:href="@{/comercios/{id}(id=${c.id})}"><span
+						<td class="grey-text text-lighten-2"><a
+							th:href="@{/comercios/{id}(id=${c.id})}"><span
 								th:text="${c.nome}"></span></a></td>
 					</div>
 					<div sec:authorize=!isAuthenticated()>
-						<td th:text="${c.nome}"></td>
+						<td class="grey-text text-lighten-2" th:text="${c.nome}"></td>
 					</div>
-					<td th:text="${c.email}"></td>
-					<td th:text="${c.endereco}"></td>
-					<td th:text="${c.telefone}"></td>
-					<td><a th:if="${c.cpfUsuario == usuario.cpf}"
+					<td class="grey-text text-lighten-2" th:text="${c.email}"></td>
+					<td class="grey-text text-lighten-2" th:text="${c.endereco}"></td>
+					<td class="grey-text text-lighten-2" th:text="${c.telefone}"></td>
+					<td class="grey-text text-lighten-2"><a
+						th:if="${c.cpfUsuario == usuario.cpf}"
 						sec:authorize="hasAnyRole('PROPRIETARIO','ADMINISTRADOR')"
 						th:href="@{/comercios/{id}/selecionar(id=${c.id})}"><i
 							class="material-icons">edit</i></a> <a
@@ -58,5 +71,8 @@
 		</table>
 
 	</div>
+
+	<div th:replace="~{rodape :: rodape}"></div>
+
 </body>
 </html>
