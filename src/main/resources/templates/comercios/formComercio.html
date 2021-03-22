@@ -28,7 +28,7 @@
 	}
 </script>
 </head>
-<body>
+<body class="card #212121 grey darken-4">
 
 
 
@@ -36,7 +36,8 @@
 
 	<div class="container">
 
-		<h1>Cadastrar seu comércio</h1>
+		<h1 style="text-align: center" class="grey-text text-lighten-2">Cadastrar
+			seu comércio</h1>
 
 
 		<form method="POST" action="/comercios" th:object="${comercio}">
@@ -45,33 +46,34 @@
 				<input type="hidden" th:field="*{id}" readonly="readonly">
 			</div>
 			<div>
-				<label>Nome: </label> <input type="text" th:field="*{nome}"
+				<label>Nome: </label> <input class="grey-text text-lighten-2"
+					type="text" th:field="*{nome}"
 					placeholder="Nome do seu estabelecimento">
 				<p th:errors="*{nome}"></p>
 			</div>
 			<div>
-				<label>Email: </label> <input type="email" th:field="*{email}"
-					placeholder="Comercio@gmail.com">
+				<label>Email: </label> <input class="grey-text text-lighten-2"
+					type="email" th:field="*{email}" placeholder="Comercio@gmail.com">
 				<p th:errors="*{email}"></p>
 			</div>
 			<div>
-				<label>Endereço: </label> <input type="text" th:field="*{endereco}"
+				<label>Endereço: </label> <input class="grey-text text-lighten-2"
+					type="text" th:field="*{endereco}"
 					placeholder="Endereço do seu estabelecimento">
 				<p th:errors="*{endereco}"></p>
 			</div>
+			<div></div>
 			<div>
-				
-			</div>
-			<div>
-				<label>Telefone: </label> <input type="text" id="tel"
-					th:field="*{telefone}" placeholder="(84)99999-9999" maxlength="14"
-					onkeyup="mascara_tel()"
+				<label>Telefone: </label> <input class="grey-text text-lighten-2"
+					type="text" id="tel" th:field="*{telefone}"
+					placeholder="(84)99999-9999" maxlength="14" onkeyup="mascara_tel()"
 					onkeypress="return event.charCode >= 48 && event.charCode <= 57">
 				<p th:errors="*{telefone}"></p>
 			</div>
 
 			<div>
-				<label>Taxa da entrega: </label> <input type="number"
+				<label>Taxa da entrega: </label> <input
+					class="grey-text text-lighten-2" type="number"
 					th:field="*{taxaEntrega}">
 			</div>
 
@@ -84,6 +86,8 @@
 		</form>
 
 	</div>
+
+	<div th:replace="~{rodape :: rodape}"></div>
 
 </body>
 </html>

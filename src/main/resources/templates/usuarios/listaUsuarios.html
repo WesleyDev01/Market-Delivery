@@ -9,50 +9,50 @@
 	rel="stylesheet">
 <title>Lista de usuários</title>
 </head>
-<body>
+<body class="#212121 grey darken-4">
 
 	<div th:replace="~{menu :: menu}"></div>
 
 	<div class="container">
 
-		<h1>Usuários</h1>
+		<h1 style="text-align: center" class="grey-text text-lighten-2">Usuários</h1>
 
 		<p th:if="${mensagem}" th:text="${mensagem}"></p>
 
 		<table class="highlight">
 			<thead>
 				<tr>
-					<th>Id</th>
-					<th>Tipo</th>
-					<th>Nome</th>
-					<th>Cpf</th>
-					<th>Email</th>
-					<th>Telefone</th>
-					<th>Login</th>
-					<th>VIP</th>
-					<th></th>
+					<th class="#64dd17 light-green accent-4">Id</th>
+					<th class="#64dd17 light-green accent-4">Tipo</th>
+					<th class="#64dd17 light-green accent-4">Nome</th>
+					<th class="#64dd17 light-green accent-4">Cpf</th>
+					<th class="#64dd17 light-green accent-4">Email</th>
+					<th class="#64dd17 light-green accent-4">Telefone</th>
+					<th class="#64dd17 light-green accent-4">Login</th>
+					<th class="#64dd17 light-green accent-4">VIP</th>
+					<th class="#64dd17 light-green accent-4"></th>
 				</tr>
 			</thead>
 			<tbody sec:authorize="hasRole('ADMINISTRADOR')">
 				<tr th:each="u : ${usuarios}">
-					<td th:text="${u.id}"></td>
+					<td class="grey-text text-lighten-2" th:text="${u.id}"></td>
 					<div th:if="${u.tipo == 1}">
-						<td th:text="Cliente"></td>
+						<td class="grey-text text-lighten-2" th:text="Cliente"></td>
 					</div>
 					<div th:if="${u.tipo == 2}">
-						<td th:text="Proprietário"></td>
+						<td class="grey-text text-lighten-2" th:text="Proprietário"></td>
 					</div>
 					<div th:if="${u.tipo != 1 && u.tipo !=2}">
-						<td th:text="Administrador"></td>
+						<td class="grey-text text-lighten-2" th:text="Administrador"></td>
 					</div>
-					<td th:text="${u.nome}"></td>
-					<td th:text="${u.cpf}"></td>
-					<td th:text="${u.email}"></td>
-					<td th:text="${u.telefone}"></td>
-					<td th:text="${u.login}"></td>
+					<td class="grey-text text-lighten-2" th:text="${u.nome}"></td>
+					<td class="grey-text text-lighten-2" th:text="${u.cpf}"></td>
+					<td class="grey-text text-lighten-2" th:text="${u.email}"></td>
+					<td class="grey-text text-lighten-2" th:text="${u.telefone}"></td>
+					<td class="grey-text text-lighten-2" th:text="${u.login}"></td>
 					<div th:switch="${u.vip}">
-						<td th:case="true">Sim</td>
-						<td th:case="false">Não</td>
+						<td class="grey-text text-lighten-2" th:case="true">Sim</td>
+						<td class="grey-text text-lighten-2" th:case="false">Não</td>
 					</div>
 					<td><a
 						th:href="@{/usuarios/listaUsuarios/{idUsuario}(idUsuario=${u.id})}">
@@ -63,5 +63,8 @@
 		</table>
 
 	</div>
+
+	<div th:replace="~{rodape :: rodape}"></div>
+
 </body>
 </html>

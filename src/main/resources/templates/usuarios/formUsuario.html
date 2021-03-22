@@ -28,15 +28,16 @@
 	}
 </script>
 </head>
-<body>
+<body class="#212121 grey darken-4">
 
 
 
 	<div th:replace="~{menu :: menu}"></div>
 
-	<div class="container">
+	<div class="container #212121 grey darken-4">
 
-		<h1>Cadastrar usuario</h1>
+		<h1 style="text-align: center" class="grey-text text-lighten-2">Cadastrar
+			usuario</h1>
 
 		<form method="POST" action="/usuarios" th:object="${usuario}">
 
@@ -44,8 +45,8 @@
 				<input type="hidden" th:field="*{id}" readonly="readonly">
 			</div>
 			<div>
-				<label>Nome: </label> <input type="text" th:field="*{nome}"
-					placeholder="Seu Nome">
+				<label>Nome: </label> <input class="grey-text text-lighten-2"
+					type="text" th:field="*{nome}" placeholder="Seu Nome">
 				<p th:errors="*{nome}"></p>
 			</div>
 			<div>
@@ -61,31 +62,32 @@
 				</p>
 			</div>
 			<div>
-				<label>Cpf: </label> <input type="text" id="cpf" th:field="*{cpf}"
-					placeholder="___.___.-__" maxlength="14" onkeyup="mascara_cpf()"
+				<label>Cpf: </label> <input class="grey-text text-lighten-2"
+					type="text" id="cpf" th:field="*{cpf}" placeholder="___.___.-__"
+					maxlength="14" onkeyup="mascara_cpf()"
 					onkeypress="return event.charCode >= 48 && event.charCode <= 57">
 				<p th:errors="*{cpf}"></p>
 			</div>
 			<div>
-				<label>Email: </label> <input type="email" th:field="*{email}"
-					placeholder="Exemplo@gmail.com">
+				<label>Email: </label> <input class="grey-text text-lighten-2"
+					type="email" th:field="*{email}" placeholder="Exemplo@gmail.com">
 				<p th:errors="*{email}"></p>
 			</div>
 			<div>
-				<label>Telefone: </label> <input type="text" id="tel"
-					th:field="*{telefone}" placeholder="(84)99999-9999" maxlength="14"
-					onkeyup="mascara_tel()"
+				<label>Telefone: </label> <input class="grey-text text-lighten-2"
+					type="text" id="tel" th:field="*{telefone}"
+					placeholder="(84)99999-9999" maxlength="14" onkeyup="mascara_tel()"
 					onkeypress="return event.charCode >= 48 && event.charCode <= 57">
 				<p th:errors="*{telefone}"></p>
 			</div>
 			<div>
-				<label>Login: </label> <input type="text" th:field="*{login}"
-					placeholder="LoginDoUsuario">
+				<label>Login: </label> <input class="grey-text text-lighten-2"
+					type="text" th:field="*{login}" placeholder="LoginDoUsuario">
 				<p th:errors="*{login}"></p>
 			</div>
 			<div>
-				<label>Senha: </label> <input type="password" th:field="*{senha}"
-					placeholder="*********">
+				<label>Senha: </label> <input class="grey-text text-lighten-2"
+					type="password" th:field="*{senha}" placeholder="*********">
 				<p th:errors="*{senha}"></p>
 			</div>
 			<div>
@@ -100,6 +102,8 @@
 		</form>
 
 	</div>
+
+	<div th:replace="~{rodape :: rodape}"></div>
 
 </body>
 </html>

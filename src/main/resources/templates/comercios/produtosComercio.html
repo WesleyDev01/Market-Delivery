@@ -9,36 +9,46 @@
 	rel="stylesheet">
 <title>Produtos</title>
 </head>
-<body>
+<body class="#212121 grey darken-4">
 
 	<div th:replace="~{menu :: menu}"></div>
 
 	<div>
-		<h1 th:text="${comercio.nome}"></h1>
+		<h1 class="grey-text text-lighten-2" style="text-align: center"
+			th:text="${comercio.nome}"></h1>
 	</div>
+
+	<p class="#64dd17 light-green accent-4">.</p>
 
 	<p th:if="${mensagem}" th:text=${mensagem}></p>
 
-	<div class="row">
+	<div class="row #64dd17 light-green accent-4">
 		<div class="s12">
-			<div class="card">
+			<div class="card #212121 grey darken-4">
 				<div class="card-content">
-					<span class="card-title">Nossas informações:</span>
+					<span class="card-title grey-text text-lighten-2">Nossas
+						informações:</span>
 					<p>
-						<strong>Nome: </strong><span th:text="${comercio.nome}"></span>
+						<strong class="grey-text text-lighten-2">Nome: </strong><span
+							class="grey-text text-lighten-2" th:text="${comercio.nome}"></span>
 					</p>
 					<p>
-						<strong>Endereço: </strong><span th:text="${comercio.endereco}"></span>
+						<strong class="grey-text text-lighten-2">Endereço: </strong><span
+							class="grey-text text-lighten-2" th:text="${comercio.endereco}"></span>
 					</p>
 					<p>
-						<strong>E-mail: </strong><span th:text="${comercio.email}"></span>
+						<strong class="grey-text text-lighten-2">E-mail: </strong><span
+							class="grey-text text-lighten-2" th:text="${comercio.email}"></span>
 					</p>
 					<p>
-						<strong>Telefone: </strong><span th:text="${comercio.telefone}"></span>
+						<strong class="grey-text text-lighten-2">Telefone: </strong><span
+							class="grey-text text-lighten-2" th:text="${comercio.telefone}"></span>
 					</p>
 					<p>
-						<strong>Taxa da entrega: </strong><span
-							th:text="${comercio.taxaEntrega}"></span><strong> R$</strong>
+						<strong class="grey-text text-lighten-2">Taxa da entrega:
+						</strong><span class="grey-text text-lighten-2"
+							th:text="${comercio.taxaEntrega}"></span><strong
+							class="grey-text text-lighten-2"> R$</strong>
 					</p>
 				</div>
 			</div>
@@ -46,11 +56,13 @@
 	</div>
 
 	<div th:if="${comercio.cpfUsuario == usuario.cpf}"
-		sec:authorize="hasRole('PROPRIETARIO')" class="row">
+		sec:authorize="hasRole('PROPRIETARIO')"
+		class="row #64dd17 light-green accent-4">
 		<div class="s12">
-			<div class="card">
+			<div class="card #212121 grey darken-4">
 				<div class="card-content">
-					<span class="card-title">Atualizar produto</span>
+					<span class="card-title grey-text text-lighten-2">Atualizar
+						produto</span>
 					<form
 						th:action="@{/comercios/{codigoComercio}(codigoComercio=${comercio.id})}"
 						method="post" th:object="${produto}">
@@ -59,28 +71,31 @@
 								readonly="readonly">
 						</div>
 						<div>
-							<label>Nome: </label> <input type="text" name="nome"
-								th:value="${produto.nome}">
+							<label>Nome: </label> <input class="grey-text text-lighten-2"
+								type="text" name="nome" th:value="${produto.nome}">
 							<p th:errors="*{nome}"></p>
 						</div>
 						<div>
-							<label>Categoria: </label> <input type="text" name="categoria"
+							<label>Categoria: </label> <input
+								class="grey-text text-lighten-2" type="text" name="categoria"
 								th:value="${produto.categoria}">
 							<p th:errors="*{categoria}"></p>
 						</div>
 						<div>
-							<label>Preço: </label> <input type="number" name="preco"
-								th:value="${produto.preco}">
+							<label>Preço: </label> <input class="grey-text text-lighten-2"
+								type="number" name="preco" th:value="${produto.preco}">
 							<p th:errors="*{preco}"></p>
 						</div>
 						<div>
-							<label>Quantidade: </label> <input type="number"
-								name="quantidade" th:value="${produto.quantidade}">
+							<label>Quantidade: </label> <input
+								class="grey-text text-lighten-2" type="number" name="quantidade"
+								th:value="${produto.quantidade}">
 							<p th:errors="*{quantidade}"></p>
 						</div>
 
 						<div>
-							<label><input type="checkbox" checked name="disponivel"> <span>Disponível</span> </label>
+							<label><input type="checkbox" checked name="disponivel">
+								<span>Disponível</span> </label>
 						</div>
 						<br></br>
 						<div>
@@ -94,33 +109,38 @@
 	</div>
 
 	<div th:if="${comercio.cpfUsuario == usuario.cpf}"
-		sec:authorize="hasRole('PROPRIETARIO')" class="row">
+		sec:authorize="hasRole('PROPRIETARIO')"
+		class="row #64dd17 light-green accent-4">
 		<div class="s12">
 			<div class="card">
-				<div class="card-content">
-					<span class="card-title">Adicionar produto:</span>
+				<div class="card-content #212121 grey darken-4">
+					<span class="card-title grey-text text-lighten-2">Adicionar
+						produto:</span>
 					<form
 						th:action="@{/comercios/{codigoComercio}(codigoComercio=${comercio.id})}"
 						method="post" th:object="${produto}">
 						<div>
-							<label>Nome: </label> <input type="text" name="nome">
+							<label>Nome: </label> <input class="grey-text text-lighten-2"
+								type="text" name="nome">
 							<p th:value="${produto.nome}"></p>
 							<p th:errors="*{nome}"></p>
 						</div>
 						<div>
-							<label>Categoria: </label> <input type="text" name="categoria">
+							<label>Categoria: </label> <input
+								class="grey-text text-lighten-2" type="text" name="categoria">
 							<p th:value="${produto.categoria}"></p>
 							<p th:errors="*{categoria}"></p>
 						</div>
 						<div>
-							<label>Preço: </label> <input type="number" name="preco">
-							<p th:value="${produto.preco}">
-								</p>
-								<p th:errors="*{preco}"></p>
+							<label>Preço: </label> <input class="grey-text text-lighten-2"
+								type="number" name="preco">
+							<p th:value="${produto.preco}"></p>
+							<p th:errors="*{preco}"></p>
 						</div>
 						<div>
-							<label>Quantidade: </label> <input type="number"
-								name="quantidade" th:value="${produto.quantidade}">
+							<label>Quantidade: </label> <input
+								class="grey-text text-lighten-2" type="number" name="quantidade"
+								th:value="${produto.quantidade}">
 							<p th:errors="*{quantidade}"></p>
 						</div>
 						<div>
@@ -138,41 +158,44 @@
 		</div>
 	</div>
 
+
 	<div class="row">
 		<div class="s12">
-			<div class="card">
+			<div class="card #212121 grey darken-4">
 				<div class="card-content">
-					<span class="card-title">Produtos</span>
+					<span class="card-title grey-text text-lighten-2">Produtos</span>
 					<table class="highlight">
 						<thead>
 							<tr>
-								<th>Id</th>
-								<th>Nome</th>
-								<th>Categoria</th>
-								<th>Preço</th>
-								<th>Quantidade</th>
-								<th>Disponível</th>
+								<th class="grey-text text-lighten-2">Id</th>
+								<th class="grey-text text-lighten-2">Nome</th>
+								<th class="grey-text text-lighten-2">Categoria</th>
+								<th class="grey-text text-lighten-2">Preço</th>
+								<th class="grey-text text-lighten-2">Quantidade</th>
+								<th class="grey-text text-lighten-2">Disponível</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="p : ${produtos}">
-								<td th:text="${p.id}"></td>
-								<td th:text="${p.nome}"></td>
-								<td th:text="${p.categoria}"></td>
-								<td th:text="${p.preco}"></td>
-								<td th:text="${p.quantidade}"></td>
+								<td class="grey-text text-lighten-2" th:text="${p.id}"></td>
+								<td class="grey-text text-lighten-2" th:text="${p.nome}"></td>
+								<td class="grey-text text-lighten-2" th:text="${p.categoria}"></td>
+								<td class="grey-text text-lighten-2" th:text="${p.preco}"></td>
+								<td class="grey-text text-lighten-2" th:text="${p.quantidade}"></td>
 								<div th:switch="${p.disponivel}">
-									<td th:case="true">Sim</td>
-									<td th:case="false">Não</td>
+									<td class="grey-text text-lighten-2" th:case="true">Sim</td>
+									<td class="grey-text text-lighten-2" th:case="false">Não</td>
 								</div>
-								<td><a sec:authorize="hasRole('PROPRIETARIO')" th:if="${comercio.cpfUsuario == usuario.cpf}"
+								<td><a sec:authorize="hasRole('PROPRIETARIO')"
+									th:if="${comercio.cpfUsuario == usuario.cpf}"
 									th:href="@{/comercios/{idComercio}/produtos/{idProduto}/selecionar(idComercio=${comercio.id}, idProduto=${p.id})}">
 										<i class="material-icons">edit</i>
 								</a> <a sec:authorize="hasRole('PROPRIETARIO')"
 									th:if="${comercio.cpfUsuario == usuario.cpf}"
 									th:href="@{/comercios/{idComercio}/produtos/{idProduto}/remover(idComercio=${comercio.id}, idProduto=${p.id})}"><i
-										class="material-icons">delete</i></a> <a th:if="${p.disponivel == true}"
+										class="material-icons">delete</i></a> <a
+									th:if="${p.disponivel == true}"
 									sec:authorize="hasRole('CLIENTE')"
 									th:href="@{/comercios/{idComercio}/produtos/{idProduto}/adicionar(idComercio=${comercio.id}, idProduto=${p.id})}"><i
 										class="material-icons">add</i></a></td>
@@ -183,6 +206,8 @@
 			</div>
 		</div>
 	</div>
+
+	<div th:replace="~{rodape :: rodape}"></div>
 
 </body>
 </html>

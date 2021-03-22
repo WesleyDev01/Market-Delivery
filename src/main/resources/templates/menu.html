@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
@@ -7,17 +8,26 @@
 </head>
 
 <body>
-	<nav th:fragment="menu">
+	<nav class="#64dd17 light-green accent-4" th:fragment="menu">
 		<div class="nav-wrapper container">
-			<a href="/" class="brand-logo">Market Delivery</a>
+			<a href="/" class="brand-logo black-text text-darken-4">Market
+				Delivery</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="/">Home</a></li>
-				<li sec:authorize="hasRole('CLIENTE')"><a href="/usuarios/listaCompras">Minhas Compras</a></li>
-				<li sec:authorize="hasRole('ADMINISTRADOR')"><a href="/usuarios/listaUsuarios">Usuarios</a></li>
-				<li sec:authorize="!isAuthenticated()"><a href="/usuarios/cadastrarUsuario">Cadastre-se</a></li>
-				<li sec:authorize="hasAnyRole('PROPRIETARIO')"><a href="/comercios/cadastrarComercio">Cadastrar seu comércio</a></li>
-				<li sec:authorize="!isAuthenticated()"><a href="/login">Login</a></li>
-				<li sec:authorize=isAuthenticated()><a href="/logout">Logout</a></li>
+				<li><a class="black-text text-darken-4" href="/">Home</a></li>
+				<li sec:authorize="hasRole('CLIENTE')"><a
+					class="black-text text-darken-4" href="/usuarios/listaCompras">Minhas
+						Compras</a></li>
+				<li sec:authorize="hasRole('ADMINISTRADOR')"><a
+					class="black-text text-darken-4" href="/usuarios/listaUsuarios">Usuarios</a></li>
+				<li sec:authorize="!isAuthenticated()"><a
+					class="black-text text-darken-4" href="/usuarios/cadastrarUsuario">Cadastre-se</a></li>
+				<li sec:authorize="hasAnyRole('PROPRIETARIO')"><a
+					class="black-text text-darken-4"
+					href="/comercios/cadastrarComercio">Cadastrar seu comércio</a></li>
+				<li sec:authorize="!isAuthenticated()"><a
+					class="black-text text-darken-4" href="/login">Login</a></li>
+				<li sec:authorize=isAuthenticated()><a
+					class="black-text text-darken-4" href="/logout">Logout</a></li>
 			</ul>
 		</div>
 	</nav>
